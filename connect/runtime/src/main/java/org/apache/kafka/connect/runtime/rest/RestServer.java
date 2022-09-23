@@ -28,11 +28,7 @@ import org.apache.kafka.connect.runtime.WorkerConfig;
 import org.apache.kafka.connect.runtime.health.ConnectClusterDetailsImpl;
 import org.apache.kafka.connect.runtime.health.ConnectClusterStateImpl;
 import org.apache.kafka.connect.runtime.rest.errors.ConnectExceptionMapper;
-import org.apache.kafka.connect.runtime.rest.resources.ConnectResource;
-import org.apache.kafka.connect.runtime.rest.resources.ConnectorPluginsResource;
-import org.apache.kafka.connect.runtime.rest.resources.ConnectorsResource;
-import org.apache.kafka.connect.runtime.rest.resources.LoggingResource;
-import org.apache.kafka.connect.runtime.rest.resources.RootResource;
+import org.apache.kafka.connect.runtime.rest.resources.*;
 import org.apache.kafka.connect.runtime.rest.util.SSLUtils;
 import org.eclipse.jetty.server.Connector;
 import org.eclipse.jetty.server.CustomRequestLog;
@@ -217,6 +213,7 @@ public class RestServer {
         resources.add(new RootResource(herder));
         resources.add(new ConnectorsResource(herder, config));
         resources.add(new ConnectorPluginsResource(herder));
+        resources.add(new ConnectorMetricsResource(herder));
         resources.forEach(resourceConfig::register);
 
         resourceConfig.register(ConnectExceptionMapper.class);
